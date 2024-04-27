@@ -6,11 +6,13 @@ require 'fileutils'
 require 'nokogiri'
 require 'json'
 
+PRODUCT_XML_FILE_PATH = 'lib/products.xml'
+
 def run_script
   download_products_xml
-  products_json_data = convert_xml_to_json(File.read('lib/products.xml'))
+  products_json_data = convert_xml_to_json(File.read(PRODUCT_XML_FILE_PATH))
   update_response = update_products(products_json_data)
-  File.delete('lib/products.xml')
+  File.delete(PRODUCT_XML_FILE_PATH)
 
   puts update_response
 rescue StandardError => e
@@ -20,7 +22,7 @@ end
 def download_products_xml
   ftp_client = Services::FtpClient.new(ENV.fetch('FTP_SERVER'))
   ftp_client.login(ENV.fetch('FTP_USER'), ENV.fetch('FTP_PASS'))
-  ftp_client.get_text_file('products.xml', 'lib/products.xml')
+  ftp_client.get_text_file('products.xml', PRODUCT_XML_FILE_PATH)
   ftp_client.close
 end
 
