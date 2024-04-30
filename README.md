@@ -43,7 +43,9 @@ Before you begin, make sure to have Ruby installed.
    ```bash
    bundle install
 
-3. Run the script
+3. Create your own `.env` file based on `.env.example`
+   
+5. Run the script
 
    ```bash
    ruby lib/product_update_script.rb
